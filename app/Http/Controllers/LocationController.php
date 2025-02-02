@@ -91,7 +91,8 @@ class LocationController extends Controller
         $location->delete();
         return response()->json([
             'res' => true,
-            'message' => 'Location deleted successfully'
+            'message' => 'Location deleted successfully',
+            'data'=>$location
         ]);
     }
     
@@ -193,6 +194,17 @@ class LocationController extends Controller
             'message' => "The distance between ".$departure->name." and ".$destination->name." is as follows.",
             'data'=>$distance
         ]);
+    }
+
+    public function maps($id){
+        $location = Location::find($id);
+       // print_r($location);
+
+       if(!$location){
+        abort(404);
+       }
+
+       return view('map', ['location' => $location]);
     }
 
 
